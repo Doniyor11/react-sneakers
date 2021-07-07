@@ -4,7 +4,7 @@ function App() {
 
             <div className="overlay">
                 <div className="drawer d-flex flex-column">
-                    <h2 className="d-flex justify-between align-centermb-30">
+                    <h2 className="d-flex justify-between align-center mb-30">
                         Корзина
                         <img className="cu-p" src="/images/cancel.svg" alt=""/>
                     </h2>
