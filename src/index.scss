@@ -33,37 +33,6 @@ header {
   }
 }
 
-.card {
-  border: 1px solid #F3F3F3;
-  padding: 20px;
-  width: 220px;
-  border-radius: 40px;
-  transition: box-shadow .2s ease-out, transform .2s ease-out;
-  cursor: pointer;
-
-  &:hover {
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.06);
-    transform: translateY(-5px);
-  }
-
-  .favorite {
-    position: absolute;
-    cursor: pointer;
-  }
-
-  h5 {
-    font-weight: 400;
-    font-size: 14px;
-    margin: 0;
-  }
-}
-
-.button {
-  background: #FFFFFF;
-  box-sizing: border-box;
-  cursor: pointer;
-  border: none;
-}
 
 .search-block {
   border: 1px solid #f3f3f3;
@@ -99,7 +68,8 @@ header {
 
   .items {
     overflow: auto;
-    ::-webkit-scrollbar{
+
+    ::-webkit-scrollbar {
       display: none;
     }
   }
