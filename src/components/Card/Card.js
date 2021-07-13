@@ -5,16 +5,21 @@ import React from "react";
 function Card({title, imgUrl, price, onFavorite, onPlus}) {
 
     const [isAdded, setIsAdded] = React.useState(false)
+    const [isFavorite, setIFavorite] = React.useState(false)
 
     const onClickPlus = () => {
         onPlus({title, imgUrl, price,});
         setIsAdded(!isAdded)
     }
 
+    const onClickFavorite = () => {
+        setIFavorite(!isFavorite)
+    }
+
     return (
         <div className={styles.card}>
-            <div className={styles.favorite} onClick={onFavorite}>
-                <img src="/images/heart.svg" alt=""/>
+            <div className={styles.favorite} onClick={onClickFavorite}>
+                <img src={isFavorite ? "/images/heart1.svg" : "/images/heart.svg"} alt="Like"/>
             </div>
             <img width="133" height="112" src={imgUrl} alt=""/>
             <h5>{title}</h5>
