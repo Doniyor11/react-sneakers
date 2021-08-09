@@ -36,21 +36,23 @@ function App() {
 
     const onRemoveItem = (id) => {
         axios.delete(`https://60ea98475dd7ff0017b397b9.mockapi.io/items/cart/${id}`);
-        setCartItems(prev => prev.filter(item => item.id !== id));
+        setCartItems(prev => prev.filter((item) => item.id !== id));
     }
 
-    const onAdToFavorite = (obj) => {
-
-        if (favorites.find(obj => obj.id === obj.id )){
-            axios.delete(`https://60ea98475dd7ff0017b397b9.mockapi.io/items/favorites/${obj.id}`);
-            setFavorites(prev => prev.filter(item => item.id !== obj.id));
-        } else {
-            axios.post('https://60ea98475dd7ff0017b397b9.mockapi.io/items/favorites', obj);
-            setFavorites(prev => [...prev, obj]);
+    const onAdToFavorite = async (obj) => {
+        try {
+            if (favorites.find((Favobj) => Favobj.id === obj.id)) {
+                axios.delete(`https://60ea98475dd7ff0017b397b9.mockapi.io/items/favorites/${obj.id}`);
+                // setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+            } else {
+                const {data} = await axios.post('https://60ea98475dd7ff0017b397b9.mockapi.io/items/favorites', obj);
+                setFavorites((prev) => [...prev, data]);
+            }
+        } catch(error) {
+            alert('Не удалос добавить в фаворить');
         }
 
-
-    }
+    };
 
     const onChangeSearchInput = (e) => {
         setSearchValue(e.target.value);
