@@ -14,24 +14,35 @@ function App() {
     const [favorites, setFavorites] = React.useState([]);
     const [searchValue, setSearchValue] = React.useState('');
     const [cartOpened, setCartOpened] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(true)
 
     React.useEffect(() => {
-        axios.get('https://60ea98475dd7ff0017b397b9.mockapi.io/item').then((res) => {
-            setItems(res.data)
-        });
-        axios.get('https://60ea98475dd7ff0017b397b9.mockapi.io/items/cart').then((res) => {
-            setCartItems(res.data)
-        });
-        axios.get('https://60ea98475dd7ff0017b397b9.mockapi.io/items/favorites').then((res) => {
-            setFavorites(res.data)
-        });
+        async function fetchData() {
+            const cartResponse = await axios.get('https://60ea98475dd7ff0017b397b9.mockapi.io/items/cart');
+            const favoritesResponse = await axios.get('https://60ea98475dd7ff0017b397b9.mockapi.io/items/favorites');
+            const itemsResponse = await axios.get('https://60ea98475dd7ff0017b397b9.mockapi.io/item');
 
+            setIsLoading(false);
+
+            setCartItems(cartResponse.data);
+            setFavorites(favoritesResponse.data);
+            setItems(itemsResponse.data);
+        }
+
+        fetchData();
     }, []);
 
 
     const onAddCart = (obj) => {
-        axios.post('https://60ea98475dd7ff0017b397b9.mockapi.io/items/cart', obj);
-        setCartItems(prev => [...prev, obj]);
+        if (carItems.find((item) => Number(item.id) === Number(obj.id))) {
+            axios.delete(`https://60ea98475dd7ff0017b397b9.mockapi.io/items/cart/${obj.id}`);
+            setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
+        } else {
+            axios.post('https://60ea98475dd7ff0017b397b9.mockapi.io/items/cart', obj);
+            setCartItems(prev => [...prev, obj]);
+        }
+        // axios.post('https://60ea98475dd7ff0017b397b9.mockapi.io/items/cart', obj);
+        // setCartItems(prev => [...prev, obj]);
     }
 
     const onRemoveItem = (id) => {
@@ -48,7 +59,7 @@ function App() {
                 const {data} = await axios.post('https://60ea98475dd7ff0017b397b9.mockapi.io/items/favorites', obj);
                 setFavorites((prev) => [...prev, data]);
             }
-        } catch(error) {
+        } catch (error) {
             alert('Не удалос добавить в фаворить');
         }
 
@@ -69,11 +80,13 @@ function App() {
             <Route path="/" exact>
                 <Home
                     items={items}
+                    cartItems={carItems}
                     searchValue={searchValue}
                     onClickClearInputSearch={onClickClearInputSearch}
                     onChangeSearchInput={onChangeSearchInput}
                     onAdToFavorite={onAdToFavorite}
                     onAddCart={onAddCart}
+                    isLoading={isLoading}
                 />
             </Route>
 
