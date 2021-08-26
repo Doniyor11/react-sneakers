@@ -16,7 +16,7 @@ function Home({
         const filtredItems = items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()),
         );
 
-        return (isLoading ? [...Array(10)] : filtredItems)
+        return (isLoading ? [...Array(8)] : filtredItems)
             .map((item, index) =>
                 <Card
                     key={index}
