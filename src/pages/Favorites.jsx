@@ -4,8 +4,7 @@ import AppContext from "../context";
 
 function Favorites({onAdToFavorite}) {
 
-    const state = React.useContext(AppContext);
-    console.log(state)
+    const {favorites} = React.useContext(AppContext);
 
     return (
         <div className="content p-40">
@@ -14,7 +13,7 @@ function Favorites({onAdToFavorite}) {
             </div>
             <div className="d-flex justify-between flex-wrap">
                 {
-                    [].map((item, index) =>
+                    favorites.map((item, index) =>
                         <Card
                             key={index}
                             favorited={true}

@@ -70,12 +70,17 @@ function App() {
         setSearchValue(e.target.value);
     }
 
+    const isItemAdded = (id) => {
+        return carItems.some((obj) => Number(obj.id) === Number(id));
+    }
+
+
     const onClickClearInputSearch = () => {
         setSearchValue('');
     }
 
     return (
-        <AppContext.Provider value={{items, carItems, favorites,}}>
+        <AppContext.Provider value={{items, carItems, favorites, isItemAdded}}>
             <div className="wrapper clear pt-40">
                 {cartOpened && <Drawer items={carItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem}/>}
                 <Header onClickCart={() => setCartOpened(true)}/>
